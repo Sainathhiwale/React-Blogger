@@ -1,0 +1,13 @@
+export function StoryList({ stories, filteredStories, activeFilter, setActiveFilter, search, setSearch, clearFilters, activeNav, onNotify, onViewAll }) {
+  return (
+    <section className="content-section stories-section">
+      <div className="section-heading"><div><div className="section-kicker">YOUR WRITING DESK</div><h2>{activeNav === 'Overview' ? 'Your stories' : `${activeNav} overview`}</h2></div><button className="text-link" onClick={onViewAll}>View all stories <span>→</span></button></div>
+      <div className="stories-toolbar">
+        <div className="filter-tabs" role="tablist" aria-label="Filter stories">{['All stories', 'Published', 'Draft'].map((filter) => <button key={filter} role="tab" aria-selected={activeFilter === filter} className={activeFilter === filter ? 'selected' : ''} onClick={() => setActiveFilter(filter)}>{filter}<span className="filter-count">{filter === 'All stories' ? stories.length : stories.filter((story) => story.status === filter).length}</span></button>)}</div>
+        <label className="search-field"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search stories" aria-label="Search stories" /><kbd>⌘ K</kbd></label>
+      </div>
+      <div className="story-list">{filteredStories.length ? filteredStories.map((story) => <article className="story-row" key={story.id}><div className={`story-thumb ${story.color}`} style={{ backgroundImage: `url(https://images.unsplash.com/${story.image}?auto=format&fit=crop&w=200&q=80)` }} role="img" aria-label="Story cover photo" /><div className="story-details"><span className="story-category">{story.category}</span><h3>{story.title}</h3><p>{story.excerpt}</p></div><div className="story-reading"><strong>{story.reads}</strong><span>reads</span></div><div className="story-meta"><span className={`status ${story.status.toLowerCase()}`}><i />{story.status}</span><span>{story.date}</span></div><button className="story-more" aria-label={`More options for ${story.title}`} onClick={() => onNotify(`Opened options for “${story.title}”.`)}>···</button></article>) : <div className="empty-state">No stories match that search.</div>}</div>
+      <div className="story-list-footer"><span>Showing {filteredStories.length} of {stories.length} stories</span><button className="text-link" onClick={clearFilters}>Clear filters</button></div>
+    </section>
+  )
+}
