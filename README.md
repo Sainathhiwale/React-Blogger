@@ -34,3 +34,7 @@ src/
 ```
 
 Feature-specific state and components live alongside their feature. `App.jsx` coordinates features and shared dialogs; `main.jsx` only mounts the React tree. The initial stories and sign-in/register flow are client-side demo data. A production deployment still needs a backend for persistence, authentication, authorization, and real analytics; credentials are not sent to a service by this demo.
+
+
+<img width="956" height="530" alt="image" src="https://github.com/user-attachments/assets/74c7c858-04f9-4696-a22f-49baf2eabd08" />
+
