@@ -1,40 +1,23 @@
-# React + Vite
+# Metering Hudi Replay Pipeline
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-ready Apache Hudi transaction data lake pipeline on Apache Spark 3.5 and Java 17 for usage metering replays.
 
-Currently, two official plugins are available:
+## Features
+- **Local Development**: Runs out of the box using `local[*]` with automatic synthetic data bootstrapping.
+- **AWS EMR Serverless**: Fully configured profile to shade and build uber-JARs targeting Glue Catalog & S3.
+- **ACID Upserts**: Copy-on-Write idempotent window updates on S3/local filesystem.
 
+## Quick Start (Local Run)
+```bash
+# 1. Run unit & integration tests
+mvn clean test
 
-# Folio
-
-A React dashboard for managing a publication, stories, and audience activity.
-
-## Development
-
-```sh
-npm install
-npm run dev
+# 2. Run local demo execution
+mvn exec:java -Dexec.mainClass="com.metering.plane.hudi.HudiReplayApp"
 ```
 
-Run `npm run lint` for ESLint and `npm run build` for the production bundle.
-
-## Application structure
-
-```text
-src/
-	features/
-		auth/        Sign-in and registration UI and state
-		dashboard/   Workspace shell and overview sections
-		stories/     Story list, editor, initial data, and state
-	shared/
-		components/  Reusable presentation components
-		hooks/       Cross-feature UI hooks
-	App.jsx        Application composition root
-	main.jsx       React DOM entry point
+## Build for AWS EMR Serverless
+```bash
+mvn clean package -Pemr -DskipTests
 ```
-
-Feature-specific state and components live alongside their feature. `App.jsx` coordinates features and shared dialogs; `main.jsx` only mounts the React tree. The initial stories and sign-in/register flow are client-side demo data. A production deployment still needs a backend for persistence, authentication, authorization, and real analytics; credentials are not sent to a service by this demo.
-
-
-<img width="956" height="530" alt="image" src="https://github.com/user-attachments/assets/74c7c858-04f9-4696-a22f-49baf2eabd08" />
-
+The output jar will be in `target/metering-hudi-replay-1.0.0.jar`.
